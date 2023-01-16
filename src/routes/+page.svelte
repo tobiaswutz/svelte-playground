@@ -1,24 +1,26 @@
 <script lang="ts">
 	let active: boolean = false;
-	import Button from "$lib/components/Button.svelte";
-	import Dropmenu from "$lib/components/Dropmenu.svelte";
+	import Dropmenu from '$lib/components/Dropmenu.svelte';
 
-
-	const toggleActieve = () => {
-		active = !active;
-		console.log('Hallo mein Name ist Tobias ich habe gerade diesesn Butten gehovert!')
-	};
+	let choices: any[] = [
+		'test1',
+		'test2',
+		'test3',
+		'test4',
+		'test5',
+		'test6',
+		'test7',
+		'test8',
+		'test9',
+		'test10'
+	];
+	let current: any = null;
 </script>
 
 <div class="h-screen text-white bg-gray-900">
 	<div>
 		<div class="p-10 h-screen w-full">
-				<Dropmenu />
-
-			<!-- <div class="h-full w-full border-2 border-orange-400 flex justify-center items-center">
-				<Button on:click={toggleActieve}>Hallo ich</Button>
-				<Dropmenu />
-			</div> -->
+			<Dropmenu bind:current {choices} />
 		</div>
 	</div>
 </div>

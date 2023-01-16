@@ -1,9 +1,11 @@
 <script lang="ts">
 	let open: boolean = false;
+	export let choices: any[] = [];
+	export let current: any = 'test1';
 </script>
 
 <div>
-	<span id="listbox-label" class="block text-sm font-medium text-gray-700">Assigned to</span>
+	<span id="listbox-label" class="block text-sm font-medium text-white">Assigned to</span>
 	<div class="relative mt-1">
 		<button
 			type="button"
@@ -13,7 +15,7 @@
 			aria-labelledby="listbox-label"
 			on:click={() => (open = !open)}
 		>
-			<span class="block truncate">Tom Cook</span>
+			<span class="block truncate text-gray-900">{current ? current : 'Bitte wählen..'}</span>
 			<span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 				<svg
 					class="h-5 w-5 text-gray-400"
@@ -33,84 +35,71 @@
 
 		{#if open}
 			<ul
-				class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+				class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm "
 				tabindex="-1"
 				role="listbox"
 				aria-labelledby="listbox-label"
 				aria-activedescendant="listbox-option-3"
 			>
-				<li
-					class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-					id="listbox-option-0"
-					role="option"
-					aria-selected="false"
-				>
-					<span class="font-normal block truncate">Wade Cooper</span>
-					<span class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
-						<svg
-							class="h-5 w-5"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
-				</li>
 
-				<li
-					class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-					id="listbox-option-0"
-					role="option"
-					aria-selected="false"
-				>
-					<span class="font-normal block truncate">Wade Cooper</span>
-					<span class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
-						<svg
-							class="h-5 w-5"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-							aria-hidden="true"
+				{#each choices as item}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<li
+						on:click={() => (current = item, open = false)}
+						class={current === item
+							? 'selected relative cursor-default select-none py-2 pl-3 pr-9'
+							: 'not-selected relative cursor-default select-none py-2 pl-3 pr-9'}
+						id="listbox-option-0"
+						role="option"
+						aria-selected="false"
+					>
+						<span
+							class:font-semibold={item === current}
+							class:font-normal={item !== current}
+							class="block truncate">{item}</span
 						>
-							<path
-								fill-rule="evenodd"
-								d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
-				</li>
-
-				<li
-					class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-					id="listbox-option-0"
-					role="option"
-					aria-selected="false"
-				>
-					<span class="font-normal block truncate">Wade Cooper</span>
-					<span class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
-						<svg
-							class="h-5 w-5"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
-				</li>
+						{#if item === current}
+							<span class="text-indigo-100 absolute inset-y-0 right-0 flex items-center pr-4">
+								<svg
+									class="h-5 w-5"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+									aria-hidden="true"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+										clip-rule="evenodd"
+									/>
+								</svg>
+							</span>
+						{/if}
+					</li>
+				{/each}
 			</ul>
 		{/if}
 	</div>
 </div>
+
+<style>
+	.selected {
+		background-color: #1f2937;
+		color: #fff;
+	}
+
+	.selected:hover {
+		background-color: rgb(67, 67, 67);
+		color: #fff;
+	}
+
+	.not-selected {
+		background-color: #fff;
+		color: #1f2937;
+	}
+
+	.not-selected:hover {
+		background-color: rgb(193, 193, 193);
+		color: #1f2937;
+	}
+</style>
